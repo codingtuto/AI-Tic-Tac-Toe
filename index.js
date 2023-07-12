@@ -1,14 +1,23 @@
-const player = "X";
-const computer = "O";
+// Tic-Tac-Toe game implementation
 
-let board_full = false;
-let play_board = ["", "", "", "", "", "", "", "", ""];
+// Constants for player and computer symbols
+const player = "X"; // Le symbole du joueur
+const computer = "O"; // Le symbole de l'ordinateur
 
-const board_container = document.querySelector(".play-area");
+// Variable to track if the board is full
+let board_full = false; // Variable pour suivre si le tableau est rempli
 
-const winner_statement = document.getElementById("winner");
+// Array to represent the game board
+let play_board = ["", "", "", "", "", "", "", "", ""]; // Tableau pour représenter le plateau de jeu
 
-check_board_complete = () => {
+// Get the board container element
+const board_container = document.querySelector(".play-area"); // Récupérer l'élément du conteneur du plateau de jeu
+
+// Get the winner statement element
+const winner_statement = document.getElementById("winner"); // Récupérer l'élément indiquant le gagnant
+
+// Function to check if the board is fully occupied
+const check_board_complete = () => { // Fonction pour vérifier si le tableau est entièrement occupé
     let flag = true;
     play_board.forEach(element => {
         if (element != player && element != computer) {
@@ -18,15 +27,15 @@ check_board_complete = () => {
     board_full = flag;
 };
 
-// helper function used in check_line() to mark the winning blocks
-const win_line = (winLine) => {
+// Helper function used in check_line() to mark the winning blocks
+const win_line = (winLine) => { // Fonction auxiliaire utilisée dans check_line() pour marquer les blocs gagnants
     for(i=0;i<3;i++){
         document.querySelector(`#block_${winLine[i]}`).classList.add("win-block");
     }
 }
 
-// helper function used in check_match() functon
-const check_line = (a, b, c) => {
+// Helper function used in check_match() function to check for a winning line
+const check_line = (a, b, c) => { // Fonction auxiliaire utilisée dans la fonction check_match() pour vérifier une ligne gagnante
     var res  = (
             play_board[a] == play_board[b] &&
             play_board[b] == play_board[c] &&
@@ -36,7 +45,8 @@ const check_line = (a, b, c) => {
     return res;
 };
 
-const check_match = () => {
+// Function to check for a winning combination on the board
+const check_match = () => { // Fonction pour vérifier une combinaison gagnante sur le plateau
     for (i = 0; i < 9; i += 3) {
         if (check_line(i, i + 1, i + 2)) {
             return [play_board[i],[i, i + 1, i + 2]];
@@ -47,6 +57,7 @@ const check_match = () => {
             return [play_board[i],[i, i + 3, i + 6]];
         }
     }
+    // Check diagonals
     if (check_line(0, 4, 8)) {
         return [play_board[0],[0, 4, 8]];
     }
@@ -56,13 +67,14 @@ const check_match = () => {
     return ["",[-1,-1,-1]];
 };
 
-const check_for_winner = () => {
+// Function to check for a winner or draw
+const check_for_winner = () => { // Fonction pour vérifier s'il y a un gagnant ou un match nul
     let res = check_match()
     if (res[0] == player) {
-        winner.innerText = "Player Won!!";
-        winner.classList.add("playerWin");
+        winner_statement.innerText = "Player Won!!"; // Le joueur a gagné !!
+        winner_statement.classList.add("playerWin");
         win_line(res[1]);
-        board_full = true
+        board_full = true;
          // Confetti Code here
         var confettiElement = document.getElementById('my-canvas');
         var confettiSettings = { target: confettiElement };
@@ -70,33 +82,29 @@ const check_for_winner = () => {
         confetti.render();
         setTimeout(() => {confetti.clear()}, 3000); // clearing after 3
     } else if (res[0] == computer) {
-        winner.innerText = "Computer Won";
-        winner.classList.add("computerWin");
+        winner_statement.innerText = "Computer Won"; // L'ordinateur a gagné
+        winner_statement.classList.add("computerWin");
         win_line(res[1]);
-        board_full = true
+        board_full = true;
     } else if (board_full) {
-        winner.innerText = "It's a Draw!";
-        winner.classList.add("draw");
+        winner_statement.innerText = "It's a Draw!"; // C'est un match nul !
+        winner_statement.classList.add("draw");
     }
 };
 
-const render_board = () => {
-    board_container.innerHTML = ""
+// Function to render the game board
+const render_board = () => { // Fonction pour afficher le plateau de jeu
+    board_container.innerHTML = "";
     play_board.forEach((e, i) => {
-        board_container.innerHTML += `<div id="block_${i}" class="block" onclick="addPlayerMove(${i})">${play_board[i]}</div>`
+        board_container.innerHTML += `<div id="block_${i}" class="block" onclick="addPlayerMove(${i})">${play_board[i]}</div>`;
         if (e == player || e == computer) {
             document.querySelector(`#block_${i}`).classList.add("occupied");
         }
     });
 };
 
-const game_loop = () => {
-    render_board();
-    check_board_complete();
-    check_for_winner();
-}
-
-const addPlayerMove = e => {
+// Function to update the game state after a player's move
+const addPlayerMove = e => { // Fonction pour mettre à jour l'état du jeu après le coup du joueur
     if (!board_full && play_board[e] == "") {
         play_board[e] = player;
         game_loop();
@@ -104,9 +112,10 @@ const addPlayerMove = e => {
     }
 };
 
-const addComputerMove = () => {
+// Function to update the game state after the computer's move
+const addComputerMove = () => { // Fonction pour mettre à jour l'état du jeu après le coup de l'ordinateur
     if (!board_full) {
-        selected = computeMoveAlphaBeta(play_board)[1]
+        selected = computeMoveAlphaBeta(play_board)[1];
         play_board[selected] = computer;
         game_loop();
     }
@@ -114,24 +123,24 @@ const addComputerMove = () => {
 
 // Artificial Intelligence based MiniMax Algorithm
 const computeMoveMiniMax = (play_board, depth = 0, isComputer = true) => {
-    let res = check_match()
+    let res = check_match();
     let bestScore;
     let bestMove;
-    let possibleMoves
+    let possibleMoves;
     if (res[0] == player) {
-        return [-10 + depth, null]
+        return [-10 + depth, null];
     }
     else if (res[0] == computer) {
-        return [10 - depth, null]
+        return [10 - depth, null];
     }
     check_board_complete();
     if (board_full) {
-        return [0, null]
+        return [0, null];
     }
     else {
         if (isComputer) {
-            bestScore = -9
-            possibleMoves = []
+            bestScore = -9;
+            possibleMoves = [];
             for (i = 0; i < play_board.length; i++) {
                 if (play_board[i] == "") {
                     possibleMoves.push(i);
@@ -139,17 +148,17 @@ const computeMoveMiniMax = (play_board, depth = 0, isComputer = true) => {
             }
             possibleMoves.forEach((move) => {
                 play_board[move] = computer;
-                score = computeMoveMiniMax(play_board, depth + 1, false)[0]
+                score = computeMoveMiniMax(play_board, depth + 1, false)[0];
                 if (score > bestScore) {
                     bestScore = score;
                     bestMove = move;
                 }
                 play_board[move] = "";
             });
-            return [bestScore, bestMove]
+            return [bestScore, bestMove];
         } else {
-            bestScore = 9
-            possibleMoves = []
+            bestScore = 9;
+            possibleMoves = [];
             for (i = 0; i < play_board.length; i++) {
                 if (play_board[i] == "") {
                     possibleMoves.push(i);
@@ -158,37 +167,38 @@ const computeMoveMiniMax = (play_board, depth = 0, isComputer = true) => {
 
             possibleMoves.forEach((move) => {
                 play_board[move] = player;
-                score = computeMoveMiniMax(play_board, depth + 1, true)[0]
+                score = computeMoveMiniMax(play_board, depth + 1, true)[0];
                 if (score < bestScore) {
                     bestScore = score;
                     bestMove = move;
                 }
                 play_board[move] = "";
-            })
-            return [bestScore, bestMove]
+            });
+            return [bestScore, bestMove];
         }
     }
-}
-// Artificial Intelligence based Alpha-Beta-pruning Algorithm
+};
+
+// Artificial Intelligence based Alpha-Beta-Pruning Algorithm
 const computeMoveAlphaBeta = (play_board, depth = 0, alpha = -Infinity, beta = +Infinity, isComputer = true) => {
-    let res = check_match()
+    let res = check_match();
     let bestScore;
     let bestMove;
-    let possibleMoves
+    let possibleMoves;
     if (res[0] == player) {
-        return [-10 + depth, null]
+        return [-10 + depth, null];
     }
     else if (res[0] == computer) {
-        return [10 - depth, null]
+        return [10 - depth, null];
     }
     check_board_complete();
     if (board_full) {
-        return [0, null]
+        return [0, null];
     }
     else {
         if (isComputer) {
-            bestScore = -9
-            possibleMoves = []
+            bestScore = -9;
+            possibleMoves = [];
             for (i = 0; i < play_board.length; i++) {
                 if (play_board[i] == "") {
                     possibleMoves.push(i);
@@ -196,8 +206,7 @@ const computeMoveAlphaBeta = (play_board, depth = 0, alpha = -Infinity, beta = +
             }
             possibleMoves.forEach((move) => {
                 play_board[move] = computer;
-                score = computeMoveAlphaBeta(play_board, depth + 1,alpha,beta, false)[0]
-                // alpha = max(alpha, score)
+                score = computeMoveAlphaBeta(play_board, depth + 1,alpha,beta, false)[0];
                 if(score>alpha){
                     alpha=score;
                 }
@@ -210,10 +219,10 @@ const computeMoveAlphaBeta = (play_board, depth = 0, alpha = -Infinity, beta = +
                     return 0,0;
                 }
             });
-            return [bestScore, bestMove]
+            return [bestScore, bestMove];
         } else {
-            bestScore = 9
-            possibleMoves = []
+            bestScore = 9;
+            possibleMoves = [];
             for (i = 0; i < play_board.length; i++) {
                 if (play_board[i] == "") {
                     possibleMoves.push(i);
@@ -222,9 +231,9 @@ const computeMoveAlphaBeta = (play_board, depth = 0, alpha = -Infinity, beta = +
 
             possibleMoves.forEach((move) => {
                 play_board[move] = player;
-                score = computeMoveAlphaBeta(play_board, depth + 1,alpha,beta ,true)[0]
+                score = computeMoveAlphaBeta(play_board, depth + 1,alpha,beta ,true)[0];
                 if(score<beta){
-                    beta=score
+                    beta=score;
                 }
                 if (score < bestScore) {
                     bestScore = score;
@@ -234,25 +243,26 @@ const computeMoveAlphaBeta = (play_board, depth = 0, alpha = -Infinity, beta = +
                 if(beta<=alpha){
                     return 0,0;
                 }
-            })
-            return [bestScore, bestMove]
+            });
+            return [bestScore, bestMove];
         }
     }
-}
+};
 
-const reset_board = () => {
+// Function to reset the game board
+const reset_board = () => { // Fonction pour réinitialiser le plateau de jeu
     play_board = ["", "", "", "", "", "", "", "", ""];
     board_full = false;
-    winner.classList.remove("playerWin");
-    winner.classList.remove("computerWin");
-    winner.classList.remove("draw");
-    winner.innerText = "";
+    winner_statement.classList.remove("playerWin");
+    winner_statement.classList.remove("computerWin");
+    winner_statement.classList.remove("draw");
+    winner_statement.innerText = "";
     render_board();
 };
 
-//initial render
+// Initial rendering of the game board
 render_board();
-//dark mode
+// Dark mode
 const myFunction = ()=> {
     var element = document.body;
     element.classList.toggle("dark");

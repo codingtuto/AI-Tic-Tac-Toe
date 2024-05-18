@@ -24,29 +24,22 @@
     justify-content: center;
 }
 
-#block_0,
-#block_1,
-#block_2 {
+#block_0, #block_1, #block_2 {
   border-top: none;
 }
 
-#block_0,
-#block_3,
-#block_6 {
+#block_0, #block_3, #block_6 {
   border-left: none;
 }
 
-#block_6,
-#block_7,
-#block_8 {
+#block_6, #block_7, #block_8 {
   border-bottom: none;
 }
 
-#block_2,
-#block_5,
-#block_8 {
+#block_2, #block_5, #block_8 {
   border-right: none;
 }
+
 .occupied:hover {
   background: #ff3a3a;
 }
@@ -95,11 +88,9 @@ button {
 }
 
 /* winner colour */
-
 .win-block{
   background:  green;
 }
-
 .dark .block{
   border: 3px solid #e6e6e6;
 }

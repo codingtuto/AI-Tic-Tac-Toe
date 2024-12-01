@@ -1,285 +1,348 @@
 /*
-$$$$$$$$\ $$\                 $$$$$$$$\                        $$$$$$$$\                         $$$$$$\  $$$$$$\ 
+$$$$$$$$\ $$\                 $$$$$$$$\                        $$$$$$$$\                         $$$$$$\  $$$$$$\
 \__$$  __|\__|                \__$$  __|                       \__$$  __|                       $$  __$$\ \_$$  _|
-   $$ |   $$\  $$$$$$$\          $$ | $$$$$$\   $$$$$$$\          $$ | $$$$$$\   $$$$$$\        $$ /  $$ |  $$ |  
-   $$ |   $$ |$$  _____|         $$ | \____$$\ $$  _____|         $$ |$$  __$$\ $$  __$$\       $$$$$$$$ |  $$ |  
-   $$ |   $$ |$$ /               $$ | $$$$$$$ |$$ /               $$ |$$ /  $$ |$$$$$$$$ |      $$  __$$ |  $$ |  
-   $$ |   $$ |$$ |               $$ |$$  __$$ |$$ |               $$ |$$ |  $$ |$$   ____|      $$ |  $$ |  $$ |  
-   $$ |   $$ |\$$$$$$$\          $$ |\$$$$$$$ |\$$$$$$$\          $$ |\$$$$$$  |\$$$$$$$\       $$ |  $$ |$$$$$$\ 
+   $$ |   $$\  $$$$$$$\          $$ | $$$$$$\   $$$$$$$\          $$ | $$$$$$\   $$$$$$\        $$ /  $$ |  $$ |
+   $$ |   $$ |$$  _____|         $$ | \____$$\ $$  _____|         $$ |$$  __$$\ $$  __$$\       $$$$$$$$ |  $$ |
+   $$ |   $$ |$$ /               $$ | $$$$$$$ |$$ /               $$ |$$ /  $$ |$$$$$$$$ |      $$  __$$ |  $$ |
+   $$ |   $$ |$$ |               $$ |$$  __$$ |$$ |               $$ |$$ |  $$ |$$   ____|      $$ |  $$ |  $$ |
+   $$ |   $$ |\$$$$$$$\          $$ |\$$$$$$$ |\$$$$$$$\          $$ |\$$$$$$  |\$$$$$$$\       $$ |  $$ |$$$$$$\
    \__|   \__| \_______|         \__| \_______| \_______|         \__| \______/  \_______|      \__|  \__|\______|
-                                                                                                                  
-                                                                                                                  
-                                                                                                                  
-$$\      $$\ $$\           $$\ $$\      $$\                           $$\                          $$\           
-$$$\    $$$ |\__|          \__|$$$\    $$$ |                          $$ |                         \__|          
-$$$$\  $$$$ |$$\ $$$$$$$\  $$\ $$$$\  $$$$ | $$$$$$\  $$\   $$\       $$ |      $$$$$$\   $$$$$$\  $$\  $$$$$$$\ 
-$$\$$\$$ $$ |$$ |$$  __$$\ $$ |$$\$$\$$ $$ | \____$$\ \$$\ $$  |      $$ |     $$  __$$\ $$  __$$\ $$ |$$  _____|
-$$ \$$$  $$ |$$ |$$ |  $$ |$$ |$$ \$$$  $$ | $$$$$$$ | \$$$$  /       $$ |     $$ /  $$ |$$ /  $$ |$$ |$$ /      
-$$ |\$  /$$ |$$ |$$ |  $$ |$$ |$$ |\$  /$$ |$$  __$$ | $$  $$<        $$ |     $$ |  $$ |$$ |  $$ |$$ |$$ |      
-$$ | \_/ $$ |$$ |$$ |  $$ |$$ |$$ | \_/ $$ |\$$$$$$$ |$$  /\$$\       $$$$$$$$\\$$$$$$  |\$$$$$$$ |$$ |\$$$$$$$\ 
-\__|     \__|\__|\__|  \__|\__|\__|     \__| \_______|\__/  \__|      \________|\______/  \____$$ |\__| \_______|
-                                                                                         $$\   $$ |              
-                                                                                         \$$$$$$  |              
-                                                                                          \______/               
- $$$$$$\  $$\           $$\                       $$\                          $$\           
-$$  __$$\ $$ |          $$ |                      $$ |                         \__|          
-$$ /  $$ |$$ | $$$$$$\  $$$$$$$\   $$$$$$\        $$ |      $$$$$$\   $$$$$$\  $$\  $$$$$$$\ 
-$$$$$$$$ |$$ |$$  __$$\ $$  __$$\  \____$$\       $$ |     $$  __$$\ $$  __$$\ $$ |$$  _____|
-$$  __$$ |$$ |$$ /  $$ |$$ |  $$ | $$$$$$$ |      $$ |     $$ /  $$ |$$ /  $$ |$$ |$$ /      
-$$ |  $$ |$$ |$$ |  $$ |$$ |  $$ |$$  __$$ |      $$ |     $$ |  $$ |$$ |  $$ |$$ |$$ |      
-$$ |  $$ |$$ |$$$$$$$  |$$ |  $$ |\$$$$$$$ |      $$$$$$$$\\$$$$$$  |\$$$$$$$ |$$ |\$$$$$$$\ 
-\__|  \__|\__|$$  ____/ \__|  \__| \_______|      \________|\______/  \____$$ |\__| \_______|
-              $$ |                                                   $$\   $$ |              
-              $$ |                                                   \$$$$$$  |              
-              \__|                                                    \______/               
-                                                                                                                  
 
-// Variables globales du jeu
-const gameData = {
-    board: ['', '', '', '', '', '', '', '', ''],
-    currentPlayer: 'X',
-    gameOver: false,
-    aiDifficulty: 'facile' // 'facile', 'moyen', 'difficile'
+
+
+$$\      $$\ $$\           $$\ $$\      $$\                           $$\                          $$\
+$$$\    $$$ |\__|          \__|$$$\    $$$ |                          $$ |                         \__|
+$$$$\  $$$$ |$$\ $$$$$$$\  $$\ $$$$\  $$$$ | $$$$$$\  $$\   $$\       $$ |      $$$$$$\   $$$$$$\  $$\  $$$$$$$\
+$$\$$\$$ $$ |$$ |$$  __$$\ $$ |$$\$$\$$ $$ | \____$$\ \$$\ $$  |      $$ |     $$  __$$\ $$  __$$\ $$ |$$  _____|
+$$ \$$$  $$ |$$ |$$ |  $$ |$$ |$$ \$$$  $$ | $$$$$$$ | \$$$$  /       $$ |     $$ /  $$ |$$ /  $$ |$$ |$$ /
+$$ |\$  /$$ |$$ |$$ |  $$ |$$ |$$ |\$  /$$ |$$  __$$ | $$  $$<        $$ |     $$ |  $$ |$$ |  $$ |$$ |$$ |
+$$ | \_/ $$ |$$ |$$ |  $$ |$$ |$$ | \_/ $$ |\$$$$$$$ |$$  /\$$\       $$$$$$$$\\$$$$$$  |\$$$$$$$ |$$ |\$$$$$$$\
+\__|     \__|\__|\__|  \__|\__|\__|     \__| \_______|\__/  \__|      \________|\______/  \____$$ |\__| \_______|
+                                                                                         $$\   $$ |
+                                                                                         \$$$$$$  |
+                                                                                          \______/
+ $$$$$$\  $$\           $$\                       $$\                          $$\
+$$  __$$\ $$ |          $$ |                      $$ |                         \__|
+$$ /  $$ |$$ | $$$$$$\  $$$$$$$\   $$$$$$\        $$ |      $$$$$$\   $$$$$$\  $$\  $$$$$$$\
+$$$$$$$$ |$$ |$$  __$$\ $$  __$$\  \____$$\       $$ |     $$  __$$\ $$  __$$\ $$ |$$  _____|
+$$  __$$ |$$ |$$ /  $$ |$$ |  $$ | $$$$$$$ |      $$ |     $$ /  $$ |$$ /  $$ |$$ |$$ /
+$$ |  $$ |$$ |$$ |  $$ |$$ |  $$ |$$  __$$ |      $$ |     $$ |  $$ |$$ |  $$ |$$ |$$ |
+$$ |  $$ |$$ |$$$$$$$  |$$ |  $$ |\$$$$$$$ |      $$$$$$$$\\$$$$$$  |\$$$$$$$ |$$ |\$$$$$$$\
+\__|  \__|\__|$$  ____/ \__|  \__| \_______|      \________|\______/  \____$$ |\__| \_______|
+              $$ |                                                   $$\   $$ |
+              $$ |                                                   \$$$$$$  |
+              \__|                                                    \______/
+
+*/
+
+// Constants
+const PLAYER_X = 'X';
+const PLAYER_O = 'O';
+const GAME_STATES = {
+    IN_PROGRESS: 'in progress',
+    WIN: 'win',
+    DRAW: 'draw'
 };
 
-// Sélection des éléments du DOM
+// Game Data Object
+const gameData = {
+    board: ['', '', '', '', '', '', '', '', ''],
+    currentPlayer: PLAYER_X,
+    gameState: GAME_STATES.IN_PROGRESS,
+    aiDifficulty: 'easy', // Initial difficulty
+};
+
+// DOM Elements
 const blocks = document.querySelectorAll('.block');
 const winnerDisplay = document.getElementById('winner');
-const resetButton = document.querySelector('button');
-const darkModeSwitch = document.querySelector('.switch input');
+const resetButton = document.getElementById('resetButton');
+const darkModeToggle = document.getElementById('darkModeToggle');
+const difficultySelect = document.getElementById('difficulty');
 
-// Fonction pour gérer les clics sur les blocs
+// Function to update the game state
+function updateGameState() {
+    if (checkWinCondition(gameData.board, gameData.currentPlayer)) {
+        gameData.gameState = GAME_STATES.WIN;
+    } else if (isBoardFull(gameData.board)) {
+        gameData.gameState = GAME_STATES.DRAW;
+    } else {
+        gameData.gameState = GAME_STATES.IN_PROGRESS    }
+
+    // Update UI based on game state
+    switch (gameData.gameState) {
+        case GAME_STATES.WIN:
+            endGame(false);
+            break;
+        case GAME_STATES.DRAW:
+            endGame(true);
+            break;
+        default:
+            // Game still in progress, update current player display (if needed)
+            break;
+
+    }
+}
+
+
+
+
+// Function to handle block clicks
 function handleBlockClick(blockId) {
-    if (gameData.gameOver || gameData.board[blockId] !== '') {
+    if (gameData.gameState !== GAME_STATES.IN_PROGRESS || gameData.board[blockId] !== '') {
         return;
     }
 
     gameData.board[blockId] = gameData.currentPlayer;
     blocks[blockId].textContent = gameData.currentPlayer;
-    blocks[blockId].classList.add('occupied'); 
+    blocks[blockId].classList.add('occupied');
+    blocks[blockId].disabled = true; // Disable the clicked block
+    blocks[blockId].style.color = getComputedStyle(document.body).getPropertyValue('--game-icon-color');
 
-    if (checkWinCondition()) {
-        endGame(false);
-    } else if (isBoardFull()) {
-        endGame(true);
-    } else {
+    updateGameState();
+
+    if (gameData.gameState === GAME_STATES.IN_PROGRESS) {
         switchPlayer();
-        if (gameData.currentPlayer === 'O') {
-            makeAIMove();
+        if (gameData.currentPlayer === PLAYER_O) {
+            // Add a small delay for the AI move to make it feel more natural
+            setTimeout(makeAIMove, 500);
+
+
         }
     }
 }
 
-// Fonction pour vérifier la condition de victoire
-function checkWinCondition() {
-    const winningCombinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // lignes
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // colonnes
-        [0, 4, 8], [2, 4, 6] // diagonales
+//Win condition check
+function checkWinCondition(board, player) {
+    const winCombinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+        [0, 4, 8], [2, 4, 6] // Diagonals
     ];
 
-    for (const combination of winningCombinations) {
+    for (const combination of winCombinations) {
         const [a, b, c] = combination;
         if (
-            gameData.board[a] &&
-            gameData.board[a] === gameData.board[b] &&
-            gameData.board[a] === gameData.board[c]
+            board[a] === player &&
+            board[b] === player &&
+            board[c] === player
         ) {
-            blocks[a].classList.add('win-block');
-            blocks[b].classList.add('win-block');
-            blocks[c].classList.add('win-block');
-            return true;
+            return combination; // Return winning combination
         }
     }
-    return false;
+    return null;
 }
 
-// Fonction pour vérifier si le tableau de jeu est plein
-function isBoardFull() {
-    return gameData.board.every(block => block !== '');
-}
 
-// Fonction pour changer de joueur
-function switchPlayer() {
-    gameData.currentPlayer = gameData.currentPlayer === 'X' ? 'O' : 'X';
-}
-
-// Fonction pour effectuer le mouvement de l'IA
-function makeAIMove() {
-    let availableBlocks = gameData.board.map((block, index) => block === '' ? index : null).filter(block => block !== null);
-
-    if (availableBlocks.length > 0) {
-        let move = -1;
-
-        switch (gameData.aiDifficulty) {
-            case 'facile':
-                move = getRandomMove(availableBlocks);
-                break;
-            case 'moyen':
-                move = getMediumMove(availableBlocks);
-                break;
-            case 'difficile':
-                move = getDifficultMove();
-                break;
-        }
-
-        if (move !== -1) {
-            handleBlockClick(move);
-        }
-    }
-}
-
-// Fonction pour obtenir un mouvement aléatoire
-function getRandomMove(availableBlocks) {
-    const randomIndex = Math.floor(Math.random() * availableBlocks.length);
-    return availableBlocks[randomIndex];
-}
-
-// Fonction pour obtenir un mouvement de niveau moyen
-function getMediumMove(availableBlocks) {
-    // Essayer de gagner
-    let move = getWinningMove(availableBlocks, 'O');
-    if (move !== -1) return move;
-
-    // Bloquer l'adversaire
-    move = getWinningMove(availableBlocks, 'X');
-    if (move !== -1) return move;
-
-    // Choisir un mouvement aléatoire
-    return getRandomMove(availableBlocks);
-}
-
-// Fonction pour obtenir un mouvement gagnant (si possible)
-function getWinningMove(availableBlocks, player) {
-    for (let i = 0; i < availableBlocks.length; i++) {
-        let tempBoard = [...gameData.board];
-        tempBoard[availableBlocks[i]] = player;
-        if (checkWinConditionForBoard(tempBoard)) {
-            return availableBlocks[i];
-        }
-    }
-    return -1;
-}
-
-// Fonction pour vérifier la condition de victoire pour un tableau donné
-function checkWinConditionForBoard(board) {
-    const winningCombinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // lignes
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // colonnes
-        [0, 4, 8], [2, 4, 6] // diagonales
-    ];
-
-    for (const combination of winningCombinations) {
-        const [a, b, c] = combination;
-        if (
-            board[a] &&
-            board[a] === board[b] &&
-            board[a] === board[c]
-        ) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Fonction pour obtenir un mouvement difficile (Minimax)
-function getDifficultMove() {
-    let bestScore = -Infinity;
-    let bestMove = -1;
-
-    for (let i = 0; i < gameData.board.length; i++) {
-        if (gameData.board[i] === '') {
-            gameData.board[i] = 'O';
-            let score = minimax(gameData.board, 0, false);
-            gameData.board[i] = '';
-
-            if (score > bestScore) {
-                bestScore = score;
-                bestMove = i;
-            }
-        }
-    }
-    return bestMove;
-}
-
-// Fonction Minimax
-function minimax(board, depth, isMaximizing) {
-    if (checkWinConditionForBoard(board)) {
-        return isMaximizing ? -10 + depth : 10 - depth;
-    } else if (isBoardFullForBoard(board)) {
-        return 0;
-    }
-
-    if (isMaximizing) {
-        let bestScore = -Infinity;
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] === '') {
-                board[i] = 'O';
-                let score = minimax(board, depth + 1, false);
-                board[i] = '';
-                bestScore = Math.max(score, bestScore);
-            }
-        }
-        return bestScore;
-    } else {
-        let bestScore = Infinity;
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] === '') {
-                board[i] = 'X';
-                let score = minimax(board, depth + 1, true);
-                board[i] = '';
-                bestScore = Math.min(score, bestScore);
-            }
-        }
-        return bestScore;
-    }
-}
-
-// Fonction pour vérifier si le tableau est plein pour un tableau donné
-function isBoardFullForBoard(board) {
+// Function to check if the board is full
+function isBoardFull(board) {
     return board.every(block => block !== '');
 }
 
-// Fonction pour terminer le jeu
-function endGame(isDraw) {
-    gameData.gameOver = true;
-    if (isDraw) {
-        winnerDisplay.textContent = 'Match nul!';
-    } else {
-        winnerDisplay.textContent = `Le joueur ${gameData.currentPlayer} a gagné!`;
-        startConfetti();
+// Function to switch players
+function switchPlayer() {
+    gameData.currentPlayer = gameData.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+}
+
+
+
+
+// AI Move Logic
+function makeAIMove() {
+    let bestMove = -1;
+    switch (gameData.aiDifficulty) {
+        case 'easy':
+            bestMove = getRandomMove(gameData.board);
+            break;
+        case 'medium':
+            bestMove = getMediumMove(gameData.board);
+            break;
+        case 'hard':
+            bestMove = getHardMove(gameData.board);
+            break;
+    }
+
+    if (bestMove !== -1) {
+        handleBlockClick(bestMove);
     }
 }
 
-// Fonction pour démarrer l'effet confetti
+function getRandomMove(board) {
+    const availableMoves = board
+        .map((block, index) => (block === '' ? index : null))
+        .filter(index => index !== null);
+    const randomIndex = Math.floor(Math.random() * availableMoves.length);
+    return availableMoves[randomIndex];
+}
+
+
+function getMediumMove(board) {
+    // Check if AI can win
+    let move = findWinningMove(board, PLAYER_O);
+    if (move !== -1) return move;
+
+
+    // Check if player can win and block
+    move = findWinningMove(board, PLAYER_X);
+    if (move !== -1) return move;
+
+    return getRandomMove(board);
+
+}
+
+function findWinningMove(board, player) {
+    const availableMoves = board
+        .map((block, index) => (block === '' ? index : null))
+        .filter(index => index !== null);
+
+
+    for (const move of availableMoves) {
+        const newBoard = [...board];
+        newBoard[move] = player;
+        if (checkWinCondition(newBoard, player)) {
+            return move;
+        }
+    }
+
+    return -1;
+}
+
+
+function getHardMove(board) {
+    return minimax(board, PLAYER_O).index;
+}
+
+
+
+function minimax(board, player, alpha = -Infinity, beta = Infinity) {
+    const winCombination = checkWinCondition(board, player)
+    if (winCombination) {
+        return { score: player === PLAYER_O ? 10 : -10, index: winCombination };
+    }
+    if (isBoardFull(board)) {
+        return { score: 0, index: -1 };
+    }
+
+    const maximizing = player === PLAYER_O
+    let best = maximizing ? { score: -Infinity, index: -1 } : { score: Infinity, index: -1 }
+
+
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === '') {
+            board[i] = player;
+            const score = minimax(board, maximizing ? PLAYER_X : PLAYER_O, alpha, beta);
+
+
+            board[i] = '';
+
+            if (maximizing) {
+                if (score.score > best.score) {
+                    best = { score: score.score, index: i };
+                    alpha = Math.max(alpha, score.score);
+                }
+            } else {
+                if (score.score < best.score) {
+                    best = { score: score.score, index: i };
+                    beta = Math.min(beta, score.score)
+                }
+
+            }
+            if (beta <= alpha) {
+                break
+            }
+
+
+        }
+    }
+
+    return best;
+}
+
+
+
+
+
+
+// Function to end the game
+function endGame(isDraw) {
+
+    if (isDraw) {
+        winnerDisplay.textContent = "It's a draw!";
+    } else {
+        winnerDisplay.textContent = `Player ${gameData.currentPlayer} wins!`;
+        highlightWinningCombination(); // Highlight if it was a win
+        startConfetti();
+    }
+    // Disable all blocks to prevent further moves
+    blocks.forEach(block => {
+        block.disabled = true;
+    });
+}
+
+
+function highlightWinningCombination() {
+    const winningCombination = checkWinCondition(gameData.board, gameData.currentPlayer);
+    if (winningCombination) {
+        winningCombination.forEach(index => {
+            blocks[index].classList.add('win-block');
+        });
+    }
+
+}
+
+
+
+// Function to start the confetti effect
 function startConfetti() {
     const confetti = new ConfettiGenerator({ target: 'my-canvas' });
     confetti.render();
 }
 
-// Fonction pour réinitialiser le jeu
+// Function to reset the board
 function resetBoard() {
     gameData.board = ['', '', '', '', '', '', '', '', ''];
-    gameData.currentPlayer = 'X';
-    gameData.gameOver = false;
+    gameData.currentPlayer = PLAYER_X;
+    gameData.gameState = GAME_STATES.IN_PROGRESS;
     winnerDisplay.textContent = '';
+
     blocks.forEach(block => {
         block.textContent = '';
         block.classList.remove('occupied', 'win-block');
+        block.disabled = false; // Re-enable blocks
     });
 }
 
-// Fonction pour basculer le mode sombre
-function toggleDarkMode() {
-    document.body.classList.toggle('dark');
+
+
+
+
+// Dark mode toggle with Bootstrap classes
+function toggleDarkMode({ target }) {
+    document.body.classList.toggle('dark-mode', target.checked);
+    document.getElementById("mainContainer").classList.toggle("bg-dark", target.checked);
+    document.getElementById("mainContainer").classList.toggle("bg-light", !target.checked);
+    document.getElementById("gameTitle").classList.toggle("text-light", target.checked);
+    document.getElementById("gameTitle").classList.toggle("text-dark", !target.checked);
 }
 
-// Ajout d'écouteurs d'événements
+
+
+
+
+
+
+// Event Listeners
 blocks.forEach((block, index) => {
     block.addEventListener('click', () => handleBlockClick(index));
 });
-
 resetButton.addEventListener('click', resetBoard);
+darkModeToggle.addEventListener('change', toggleDarkMode);
 
-// Initialisation du jeu
+
+difficultySelect.addEventListener('change', ({ target }) => {
+    gameData.aiDifficulty = target.value;
+    resetBoard(); // Reset the game when difficulty changes
+
+});
+
+// Initial setup
 resetBoard();

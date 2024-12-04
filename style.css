@@ -1,175 +1,67 @@
-/* all rounder */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Lato', sans-serif;
-    overflow: hidden;
+/* Import Bootstrap's CSS (make sure to include this in your HTML) */
+
+
+:root {
+    --bs-body-bg: #f0f0f0; 
+    --bs-body-color: #222;   
+    --bs-border-color: #ccc; 
+    --game-icon-color: #222; /* New variable for X/O color */
 }
 
-/* font styling in blocks */
-.play-area>.block{
-    font-family: "Permanent Marker", Arial, Helvetica, sans-serif;
-}
-/* container position */
-.containerMain{
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    align-items: center;
-    justify-content: center;
+
+
+
+body {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
 }
 
-#block_0, #block_1, #block_2 {
-  border-top: none;
+/* Use Bootstrap classes for grid layout */
+#gameBoard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 400px; /* Adjust as needed for mobile responsiveness */
+    margin: 0 auto; /* Center the board */
 }
 
-#block_0, #block_3, #block_6 {
-  border-left: none;
+.dark-mode {
+    --bs-body-bg: #222;     
+    --bs-body-color: #e6e6e6;
+    --bs-border-color: #e6e6e6; 
+    --game-icon-color: #e6e6e6; /* X/O color in dark mode */
 }
 
-#block_6, #block_7, #block_8 {
-  border-bottom: none;
-}
 
-#block_2, #block_5, #block_8 {
-  border-right: none;
-}
-
-.occupied:hover {
-  background: #ff3a3a;
-}
-.play-area {
-  display: grid;
-  width: 70vmin;
-  height: 70vmin;
-  margin: 10px;
-  grid-template-columns:1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-}
 .block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 6rem;
-  font-weight: bold;
-  border: 3px solid black;
-  transition: background 0.2s ease-in-out;
+    font-size: 3rem; /* Adjust font size for different screen sizes */
+    aspect-ratio: 1/1;
+    border: 2px solid var(--bs-border-color); /* Add a border to define the blocks */
+    color: var(--game-icon-color);
 }
 
-.block:hover {
-  cursor: pointer;
-  background: black;
-  color: white;
+@media (max-width: 576px) { /* Adjust breakpoint as needed */
+    .block {
+        font-size: 2rem; 
+    }
 }
 
-button:hover {
-  cursor: pointer;
-  background: black;
-  color: white;
-}
-button {
-  outline: none;
-  border: 4px solid black;
-  border-radius: 7px;
-  padding: 10px 20px;
-  font-weight: bold;
-  font-size: 2vh;
-  background: none;
-  transition: all 0.2s ease-in-out;
-}
-.dark{
-    background-color: #222;
-    color: #e6e6e6;
+/* Style the buttons using Bootstrap classes */
+.btn-primary { /* Reset button color customization */
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
-/* winner colour */
-.win-block{
-  background:  green;
-}
-.dark .block{
-  border: 3px solid #e6e6e6;
-}
-.dark .block:hover {
-  cursor: pointer;
-  background: #e6e6e6;
-  color: black;
-}
-.dark button{
-  border: 4px solid #e6e6e6;
-}
-.dark button:hover{
-  background: #e6e6e6;
-  color: black;
-}
-/* Switch */
-.onoff{
-  position: absolute;
-  top: 8px;
-  right: 16px;
-}
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 64px;
-  height: 36px;
-  overflow: hidden; cursor: pointer;
-  border: 2px solid #999999; border-radius: 20px;
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
 }
 
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
+.win-block { /* Winning block highlight */
+  background-color: #28a745 !important; /* Use !important to override Bootstrap styles */
+  color: white !important;
 }
 
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #222;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #222;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+/* Apply bootstrap utility classes for responsiveness */
+#gameTitle {
+    font-family: "Permanent Marker", sans-serif; /* Use Permanent Marker or your preferred font */
 }
